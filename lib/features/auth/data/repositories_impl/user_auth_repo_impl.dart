@@ -26,20 +26,21 @@ class UserAuthRepoImpl with RepoSafeCallMixin implements UserAuthRepository {
   }
 
   @override
-  Future<void> setUserData(UserEntity myUser) {
-    // TODO: implement setUserData
-    throw UnimplementedError();
-  }
+  Future<FailureOr<void>> signIn(String email, String password) =>
+      callWithErrorHandling(
+        () => _userAuthDataSource.signInWithEmailAndPassword( email, password),
+      );
 
   @override
-  Future<void> signIn(String email, String password) =>
-      _userAuthDataSource.signInWithEmailAndPassword(email, password);
+  Future<FailureOr<void>> setUserData(UserModels myUser) =>
+      callWithErrorHandling<void>(
+        () => _userAuthDataSource.setUserData(myUser),
+      );
 
   @override
   Future<FailureOr<UserEntity>> signUp(String email, String password) =>
       callWithErrorHandling<UserEntity>(() {
-        final fetchedSignUpInfo = _userAuthDataSource
-            .signUpWithEmailAndPassword(email, password);
+        final fetchedSignUpInfo = _userAuthDataSource.signUpWithEmailAndPassword(email, password);
         return _mappr.convert(fetchedSignUpInfo);
       });
 

@@ -10,6 +10,7 @@ abstract interface class UserAuthDataSource {
   Stream<UserModels> getUserAuthentication();
   Future<void> signInWithEmailAndPassword(String email, String password);
   Future<UserModels> signUpWithEmailAndPassword(String email, String password);
+  Future<UserModels> setUserData( UserModels myUser);
 }
 
 class UserAuthDataSourceImpl implements UserAuthDataSource {
@@ -76,5 +77,11 @@ class UserAuthDataSourceImpl implements UserAuthDataSource {
       name: firebaseUser.displayName ?? "",
       email: firebaseUser.email ?? email,
     );
+  }
+  
+  @override
+  Future<UserModels> setUserData(UserModels myUser) {
+    // TODO: implement setUserData
+    throw UnimplementedError();
   }
 }
